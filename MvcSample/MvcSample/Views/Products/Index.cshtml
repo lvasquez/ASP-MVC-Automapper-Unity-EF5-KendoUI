@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@(Html.Kendo().Grid<DataModel.Products>()
+    .Name("products")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.ProductName);
+        columns.Bound(p => p.UnitPrice).Width(120);
+    })
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Pageable(pageable =>
+                        {
+                            pageable.Refresh(true);
+                            pageable.PageSizes(true);
+                        })
+    .HtmlAttributes(new { style = "height:530px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Batch(true)
+        .ServerOperation(false)
+        .Events(events => events.Error("error_handler"))
+        .Model(model =>
+        {
+            model.Id(p => p.ProductID);
+        })
+        .PageSize(15)
+        .Read(read => read.Action("GetAll", "Products"))   
+    )
+)
+
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>

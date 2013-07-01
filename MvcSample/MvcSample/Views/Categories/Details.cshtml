@@ -1,0 +1,30 @@
+﻿@model MvcSample.Models.CategoriesViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Categories</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CategoryName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CategoryName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
